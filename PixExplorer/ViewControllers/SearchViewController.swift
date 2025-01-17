@@ -11,9 +11,11 @@ import Alamofire
 class SearchViewController: BaseViewController {
     
     private let searchView = SearchView()
-    var list = [Photo]()
-    var page = 1
-    var isEnd = false
+    private var list = [Photo]()
+    private var page = 1
+    private var isEnd = false
+    private var searchText: String?
+    private var previousSearchText: String?
     
     override func loadView() {
         view = searchView
@@ -24,12 +26,14 @@ class SearchViewController: BaseViewController {
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
         searchView.collectionView.prefetchDataSource = self
+        searchView.searchBar.delegate = self
         searchView.collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
-        callRequest(page: page)
+        guard let searchText else { return }
+        callRequest(query: searchText, page: page)
     }
     
-    func callRequest(page: Int) {
-        NetworkManager.shard.callRequest("cat", page) { value in
+    func callRequest(query: String, page: Int) {
+        NetworkManager.shard.callRequest(query, page) { value in
             print(#function, "page:", page)
             guard let value else { return }
             if page == 1 {
@@ -50,14 +54,34 @@ class SearchViewController: BaseViewController {
     }
 }
 
+// MARK: UISearchBarDelegate
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchView.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        view.endEditing(true)
+        if let previousSearchText {
+            guard searchText != previousSearchText else { return }
+        }
+        page = 1
+        isEnd = false
+        previousSearchText = searchText
+        self.searchText = searchText
+        callRequest(query: searchText, page: page)
+    }
+}
+
+
+
+// MARK: Pagenation - UICollectionViewDataSourcePrefetching
 extension SearchViewController: UICollectionViewDataSourcePrefetching {
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
 
         for indexPath in indexPaths {
-            if !isEnd && list.count-2 == indexPath.item {
+            if !isEnd && list.count-2 == indexPath.item || list.count-3 == indexPath.item {
                 page += 1
-                callRequest(page: page)
+                guard let searchText else { return }
+                callRequest(query: searchText, page: page)
             }
         }
         
@@ -68,6 +92,8 @@ extension SearchViewController: UICollectionViewDataSourcePrefetching {
     }
 }
 
+
+// MARK: UICollectionViewDelegate, DataSource
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         list.count
@@ -78,6 +104,4 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.configureData(item: list[indexPath.item])
         return cell
     }
-    
-    
 }

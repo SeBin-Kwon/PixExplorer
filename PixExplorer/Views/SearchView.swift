@@ -27,13 +27,13 @@ class SearchView: BaseView {
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
         }
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(searchBar).offset(50)
+            make.top.equalTo(searchBar).offset(80)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
             make.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
     override func configureView() {
-        collectionView.backgroundColor = .yellow
+//        collectionView.backgroundColor = .yellow
     }
     
     private func configureCollectionViewLayout() -> UICollectionViewLayout {
