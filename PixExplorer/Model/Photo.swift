@@ -6,3 +6,19 @@
 //
 
 import Foundation
+
+struct PhotoList: Decodable {
+    let total: Int
+    let total_pages: Int
+    let results: [Photo]
+}
+
+struct Photo: Decodable {
+    let urls: PhotoUrls
+    let created_at: String
+}
+
+struct PhotoUrls: Decodable {
+    let full: String
+    let small: String
+}
