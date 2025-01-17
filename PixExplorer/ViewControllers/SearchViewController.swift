@@ -7,23 +7,28 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.title = "SEARCH PHOTO"
-        // Do any additional setup after loading the view.
+class SearchViewController: BaseViewController {
+    
+    private let searchView = SearchView()
+    
+    override func loadView() {
+        view = searchView
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func configureView() {
+        navigationItem.title = "SEARCH PHOTO"
     }
-    */
+    
+}
 
+extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    
 }
