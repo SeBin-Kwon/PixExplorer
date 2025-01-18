@@ -44,6 +44,12 @@ class SearchViewController: BaseViewController {
             if value.total == page {
                 self.isEnd = true
             }
+            if !self.list.isEmpty {
+                self.searchView.resultLabel.isHidden = true
+            } else if self.list.isEmpty {
+                self.searchView.resultLabel.isHidden = false
+                self.searchView.resultLabel.text = "검색 결과가 없습니다."
+            }
             self.searchView.collectionView.reloadData()
             if page == 1 && !self.list.isEmpty {
                 self.searchView.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)

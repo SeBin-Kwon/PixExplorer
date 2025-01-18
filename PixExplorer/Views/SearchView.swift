@@ -15,11 +15,19 @@ class SearchView: BaseView {
         search.searchBarStyle = .minimal
         return search
     }()
+    let resultLabel = {
+        let label = UILabel()
+        label.text = "사진을 검색해보세요."
+        label.font = .systemFont(ofSize: 17, weight: .bold)
+        label.isHidden = false
+        return label
+    }()
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
     
     override func configureHierarchy() {
         addSubview(searchBar)
         addSubview(collectionView)
+        addSubview(resultLabel)
     }
     override func configureLayout() {
         searchBar.snp.makeConstraints { make in
@@ -30,6 +38,9 @@ class SearchView: BaseView {
             make.top.equalTo(searchBar).offset(80)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
             make.bottom.equalTo(safeAreaLayoutGuide)
+        }
+        resultLabel.snp.makeConstraints { make in
+            make.center.equalTo(safeAreaLayoutGuide)
         }
     }
     override func configureView() {
