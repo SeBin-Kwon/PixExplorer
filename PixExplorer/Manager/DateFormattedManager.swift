@@ -13,8 +13,8 @@ class DateFormattedManager {
     
     func dateFormetted(_ str: String) -> String {
         let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         let date = format.date(from: str)
-        format.locale = Locale(identifier: "ko_KR")
         format.dateFormat = "yyyy년 M월 d일 게시됨"
         return format.string(from: date ?? Date())
     }
