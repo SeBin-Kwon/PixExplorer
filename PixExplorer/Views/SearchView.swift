@@ -66,18 +66,8 @@ class SearchView: BaseView {
         }
     }
     override func configureView() {
-//        orderButton.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
-//        collectionView.backgroundColor = .yellow
+
     }
-    
-//    @objc func orderButtonTapped() {
-//        print(#function)
-//        islatest.toggle()
-//        searchView.orderButton.setTitle(islatest ? "최신순" : "관련순", for: .normal)
-//        guard let searchText else { return }
-//        callRequest(query: searchText, page: page, order: islatest)
-        
-//    }
     
     private func configureCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()

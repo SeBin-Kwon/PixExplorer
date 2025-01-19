@@ -10,7 +10,7 @@ import Alamofire
 
 class NetworkManager {
     
-    static let shard = NetworkManager()
+    static let shared = NetworkManager()
     private init() {}
     private let header: HTTPHeaders = ["Authorization": APIKey.unsplash]
     func fetchPhotoSearchResults(_ query: String, _ page: Int, _ order: Bool, _ completionHandler: @escaping (PhotoList?) -> Void) {
@@ -36,4 +36,27 @@ class NetworkManager {
                 }
             }
     }
+    
+    func fetchPhotoDetailResults(_ query: String, _ completionHandler: @escaping (PhotoDetail?) -> Void) {
+        var url = "https://api.unsplash.com/photos/\(query)/statistics?"
+        AF.request(url, method: .get, headers: header)
+            .validate(statusCode: 200..<500)
+            .responseDecodable(of: PhotoDetail.self) { response in
+                print(response.response?.statusCode)
+                guard let statusCode = response.response?.statusCode else { return }
+                if statusCode >= 400 && statusCode < 500 {
+                    completionHandler(nil)
+                    return
+                }
+                switch response.result {
+                case .success(let value):
+                    print("Success Detail")
+                    completionHandler(value)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        
+    }
+    
 }

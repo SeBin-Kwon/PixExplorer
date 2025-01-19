@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class SearchViewController: BaseViewController {
     
@@ -52,7 +51,7 @@ class SearchViewController: BaseViewController {
     }
     
     func callRequest(query: String, page: Int, order: Bool) {
-        NetworkManager.shard.fetchPhotoSearchResults(query, page, order) { value in
+        NetworkManager.shared.fetchPhotoSearchResults(query, page, order) { value in
             print(#function, "page:", page)
             print("islatest",order)
             guard let value else { return }
@@ -121,6 +120,15 @@ extension SearchViewController: UICollectionViewDataSourcePrefetching {
 
 // MARK: UICollectionViewDelegate, DataSource
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function)
+        let vc = DetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+        vc.id = list[indexPath.item].id
+        vc.urlString = list[indexPath.item].urls.small
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         list.count
     }

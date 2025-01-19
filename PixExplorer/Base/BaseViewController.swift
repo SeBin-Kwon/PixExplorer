@@ -12,6 +12,7 @@ class BaseViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         configureView()
+        view.backgroundColor = .white
     }
     
     func configureView() {
