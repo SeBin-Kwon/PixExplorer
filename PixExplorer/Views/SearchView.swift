@@ -65,9 +65,6 @@ class SearchView: BaseView {
             make.trailing.equalTo(safeAreaInsets).offset(18)
         }
     }
-    override func configureView() {
-
-    }
     
     private func configureCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()

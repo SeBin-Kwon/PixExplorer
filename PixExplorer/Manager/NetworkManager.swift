@@ -59,4 +59,26 @@ class NetworkManager {
         
     }
     
+    func fetchPhotoTopicResults(_ topic: String, _ completionHandler: @escaping ([Photo]?) -> Void) {
+        
+            let url = "https://api.unsplash.com/topics/\(topic)/photos?page=1"
+            AF.request(url, method: .get, headers: header)
+                .validate(statusCode: 200..<500)
+                .responseDecodable(of: [Photo].self) { response in
+                    print(response.response?.statusCode)
+                    guard let statusCode = response.response?.statusCode else { return }
+                    if statusCode >= 400 && statusCode < 500 {
+                        completionHandler(nil)
+                        return
+                    }
+                    switch response.result {
+                    case .success(let value):
+                        print("Success Detail")
+                        completionHandler(value)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
+    }
+    
 }
