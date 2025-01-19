@@ -30,8 +30,6 @@ class TopicViewController: BaseViewController {
     }
 
     private func configureLayout() {
-        scrollView.backgroundColor = .lightGray
-        topicView.backgroundColor = .red
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -40,12 +38,11 @@ class TopicViewController: BaseViewController {
             make.width.equalTo(scrollView.snp.width)
             make.verticalEdges.equalTo(scrollView)
         }
-        print("topicView height",topicView.frame.height)
     }
     
     override func configureView() {
         navigationItem.title = "OUR TOPIC"
-        navigationItem.largeTitleDisplayMode = .always
+
         topicView.goldenCollectionView.delegate = self
         topicView.goldenCollectionView.dataSource = self
         topicView.architectCollectionView.delegate = self

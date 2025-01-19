@@ -80,9 +80,4 @@ class DetailView: BaseView {
             make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
         }
     }
-    
-    override func configureView() {
-        
-    }
-    
 }

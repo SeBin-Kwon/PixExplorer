@@ -19,7 +19,7 @@ class TabBarController: UITabBarController {
         
         let secondNav = UINavigationController(rootViewController: TopicViewController())
         secondNav.tabBarItem = UITabBarItem(title: "토픽", image: UIImage(systemName: "chart.xyaxis.line")?.withTintColor(.gray), selectedImage: UIImage(systemName: "chart.xyaxis.line")?.withTintColor(.black))
-        
+        secondNav.navigationBar.prefersLargeTitles = true
         setViewControllers([firstNav, secondNav], animated: true)
     }
     

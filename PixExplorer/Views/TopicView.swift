@@ -28,15 +28,27 @@ class TopicView: BaseView {
         return label
     }()
     
-    lazy var goldenCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
-    lazy var architectCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
-    lazy var businessCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
+    lazy var goldenCollectionView = {
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
+        collection.showsHorizontalScrollIndicator = false
+        return collection
+    }()
+    
+    lazy var architectCollectionView = {
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
+        collection.showsHorizontalScrollIndicator = false
+        return collection
+    }()
+    lazy var businessCollectionView = {
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
+        collection.showsHorizontalScrollIndicator = false
+        return collection
+    }()
 
     let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
-        image.backgroundColor = .yellow
         return image
     }()
     
@@ -81,16 +93,12 @@ class TopicView: BaseView {
             make.height.equalTo(300)
         }
     }
-    override func configureView() {
-    }
     
     private func configureCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
-        let itemSpacing: CGFloat = 5
-        let lineSpacing: CGFloat = 5
+        let itemSpacing: CGFloat = 10
         layout.minimumInteritemSpacing = itemSpacing
-        layout.minimumLineSpacing = lineSpacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: 200, height: 300)
         layout.scrollDirection = .horizontal
         return layout

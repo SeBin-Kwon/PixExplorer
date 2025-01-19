@@ -33,8 +33,6 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
             make.leading.bottom.equalToSuperview().inset(10)
         }
     }
-    override func configureView() {
-    }
     
     func configureData(item: Photo) {
         guard let url = URL(string: item.urls.small) else { return }

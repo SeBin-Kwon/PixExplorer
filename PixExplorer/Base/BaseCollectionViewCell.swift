@@ -13,12 +13,10 @@ class BaseCollectionViewCell: UICollectionViewCell {
         super.init(frame: .zero)
         configureHierarchy()
         configureLayout()
-        configureView()
     }
     
     func configureHierarchy() {}
     func configureLayout() {}
-    func configureView() {}
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {

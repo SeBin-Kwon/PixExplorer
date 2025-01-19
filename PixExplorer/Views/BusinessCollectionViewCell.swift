@@ -11,6 +11,7 @@ class BusinessCollectionViewCell: BaseCollectionViewCell {
     let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 20
         image.clipsToBounds = true
         image.backgroundColor = .systemGray6
         return image
