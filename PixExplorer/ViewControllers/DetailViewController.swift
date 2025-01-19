@@ -31,8 +31,8 @@ class DetailViewController: BaseViewController {
         print(#function)
         NetworkManager.shared.fetchPhotoDetailResults(id) { value in
             guard let value else { return }
-            self.detailView.downloadDataLabel.text = String(value.downloads.total)
-            self.detailView.viewDataLabel.text = String(value.views.total)
+            self.detailView.downloadDataLabel.text = NumberFormattedManager.shared.formatNumber(value.downloads.total)
+            self.detailView.viewDataLabel.text = NumberFormattedManager.shared.formatNumber(value.views.total)
         }
     }
 }
