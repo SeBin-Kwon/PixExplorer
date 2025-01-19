@@ -81,6 +81,24 @@ class TopicViewController: BaseViewController {
 
 extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function)
+        let vc = DetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+        switch collectionView {
+        case topicView.goldenCollectionView:
+            vc.id = goldenList[indexPath.item].id
+            vc.urlString = goldenList[indexPath.item].urls.small
+        case topicView.architectCollectionView:
+            vc.id = architectList[indexPath.item].id
+            vc.urlString = architectList[indexPath.item].urls.small
+        default:
+            vc.id = businessList[indexPath.item].id
+            vc.urlString = businessList[indexPath.item].urls.small
+        }
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         10
     }
