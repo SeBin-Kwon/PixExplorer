@@ -130,6 +130,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         vc.name = list[indexPath.item].user.name
         vc.profileUrl = list[indexPath.item].user.profile_image.small
         vc.createdDate = list[indexPath.item].created_at
+        vc.width = list[indexPath.item].width
+        vc.height = list[indexPath.item].height
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

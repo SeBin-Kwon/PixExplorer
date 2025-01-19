@@ -16,6 +16,8 @@ class DetailViewController: BaseViewController {
     var name: String?
     var profileUrl: String?
     var createdDate: String?
+    var width: Int?
+    var height: Int?
     
     let detailView = DetailView()
     override func loadView() {
@@ -31,6 +33,7 @@ class DetailViewController: BaseViewController {
         detailView.detailHeaderView.dateLabel.text = DateFormattedManager.shared.dateFormetted(createdDate ?? "")
         guard let url = URL(string: profileUrl ?? "") else { return }
         detailView.detailHeaderView.imageView.kf.setImage(with: url)
+        detailView.sizeDataLabel.text = "\(String(width ?? 0)) x \(String(height ?? 0))"
     }
     
     private func callRequest(_ id: String) {

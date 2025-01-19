@@ -19,6 +19,8 @@ struct Photo: Decodable {
     let created_at: String
     let likes: Int
     let user: UserInfo
+    let width: Int
+    let height: Int
 }
 
 struct PhotoUrls: Decodable {

@@ -23,6 +23,12 @@ class DetailView: BaseView {
         label.font = .systemFont(ofSize: 17, weight: .bold)
         return label
     }()
+    let sizeLabel = {
+        let label = UILabel()
+        label.text = "크기"
+        label.font = .systemFont(ofSize: 15, weight: .bold)
+        return label
+    }()
     let downloadLabel = {
         let label = UILabel()
         label.text = "다운로드"
@@ -33,6 +39,11 @@ class DetailView: BaseView {
         let label = UILabel()
         label.text = "조회수"
         label.font = .systemFont(ofSize: 15, weight: .bold)
+        return label
+    }()
+    let sizeDataLabel = {
+        let label = UILabel()
+        label.text = "000 x 000"
         return label
     }()
     let downloadDataLabel = {
@@ -50,10 +61,12 @@ class DetailView: BaseView {
         addSubview(detailHeaderView)
         addSubview(imageView)
         addSubview(infoLabel)
-        addSubview(downloadLabel)
+        addSubview(sizeLabel)
         addSubview(viewLabel)
-        addSubview(downloadDataLabel)
+        addSubview(downloadLabel)
+        addSubview(sizeDataLabel)
         addSubview(viewDataLabel)
+        addSubview(downloadDataLabel)
     }
     override func configureLayout() {
         detailHeaderView.snp.makeConstraints { make in
@@ -70,16 +83,24 @@ class DetailView: BaseView {
             make.top.equalTo(imageView.snp.bottom).offset(10)
             make.leading.equalTo(safeAreaLayoutGuide).offset(10)
         }
+        sizeLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(infoLabel)
+            make.leading.equalTo(infoLabel.snp.trailing).offset(30)
+        }
         viewLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.top.equalTo(sizeLabel.snp.bottom).offset(10)
             make.leading.equalTo(infoLabel.snp.trailing).offset(30)
         }
         downloadLabel.snp.makeConstraints { make in
             make.top.equalTo(viewLabel.snp.bottom).offset(10)
             make.leading.equalTo(viewLabel)
         }
+        sizeDataLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(infoLabel)
+            make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
+        }
         viewDataLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.top.equalTo(sizeDataLabel.snp.bottom).offset(10)
             make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
         }
         downloadDataLabel.snp.makeConstraints { make in
