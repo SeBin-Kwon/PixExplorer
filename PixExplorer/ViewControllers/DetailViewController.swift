@@ -11,13 +11,7 @@ import Kingfisher
 
 class DetailViewController: BaseViewController {
     
-    var id: String?
-    var urlString: String?
-    var name: String?
-    var profileUrl: String?
-    var createdDate: String?
-    var width: Int?
-    var height: Int?
+    var photo: Photo?
     
     let detailView = DetailView()
     override func loadView() {
@@ -25,20 +19,21 @@ class DetailViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        guard let id else { return }
-        callRequest(id)
-        guard let url = URL(string: urlString ?? "") else { return }
+        guard let photo else { return }
+        callRequest(photo.id)
+        guard let url = URL(string: photo.urls.small) else { return }
         detailView.imageView.kf.setImage(with: url)
-        detailView.detailHeaderView.nameLabel.text = name
-        detailView.detailHeaderView.dateLabel.text = DateFormattedManager.shared.dateFormetted(createdDate ?? "")
-        guard let url = URL(string: profileUrl ?? "") else { return }
+        detailView.detailHeaderView.nameLabel.text = photo.user.name
+        detailView.detailHeaderView.dateLabel.text = DateFormattedManager.shared.dateFormetted(photo.created_at)
+        guard let url = URL(string: photo.user.profile_image.small) else { return }
         detailView.detailHeaderView.imageView.kf.setImage(with: url)
-        detailView.sizeDataLabel.text = "\(String(width ?? 0)) x \(String(height ?? 0))"
+        detailView.sizeDataLabel.text = "\(photo.width) x \(photo.height)"
     }
     
     private func callRequest(_ id: String) {
         print(#function)
-        NetworkManager.shared.fetchPhotoDetailResults(id) { value in
+        guard let photo else { return }
+        NetworkManager.shared.fetchPhotoDetailResults(photo.id) { value in
             guard let value else { return }
             self.detailView.downloadDataLabel.text = NumberFormattedManager.shared.formatNumber(value.downloads.total)
             self.detailView.viewDataLabel.text = NumberFormattedManager.shared.formatNumber(value.views.total)

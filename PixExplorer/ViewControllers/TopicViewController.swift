@@ -84,29 +84,11 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
         navigationController?.pushViewController(vc, animated: true)
         switch collectionView {
         case topicView.goldenCollectionView:
-            vc.id = goldenList[indexPath.item].id
-            vc.urlString = goldenList[indexPath.item].urls.small
-            vc.name = goldenList[indexPath.item].user.name
-            vc.profileUrl = goldenList[indexPath.item].user.profile_image.small
-            vc.createdDate = goldenList[indexPath.item].created_at
-            vc.width = goldenList[indexPath.item].width
-            vc.height = goldenList[indexPath.item].height
+            vc.photo = goldenList[indexPath.item]
         case topicView.architectCollectionView:
-            vc.id = architectList[indexPath.item].id
-            vc.urlString = architectList[indexPath.item].urls.small
-            vc.name = architectList[indexPath.item].user.name
-            vc.profileUrl = architectList[indexPath.item].user.profile_image.small
-            vc.createdDate = architectList[indexPath.item].created_at
-            vc.width = architectList[indexPath.item].width
-            vc.height = architectList[indexPath.item].height
+            vc.photo = architectList[indexPath.item]
         default:
-            vc.id = businessList[indexPath.item].id
-            vc.urlString = businessList[indexPath.item].urls.small
-            vc.name = businessList[indexPath.item].user.name
-            vc.profileUrl = businessList[indexPath.item].user.profile_image.small
-            vc.createdDate = businessList[indexPath.item].created_at
-            vc.width = businessList[indexPath.item].width
-            vc.height = businessList[indexPath.item].height
+            vc.photo = businessList[indexPath.item]
         }
         
     }
