@@ -12,7 +12,7 @@ class ArchitectCollectionViewCell: BaseCollectionViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
-        image.backgroundColor = .red
+        image.backgroundColor = .systemGray6
         return image
     }()
     

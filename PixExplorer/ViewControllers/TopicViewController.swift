@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 class TopicViewController: BaseViewController {
     
@@ -14,11 +15,33 @@ class TopicViewController: BaseViewController {
     private var goldenList = [Photo]()
     private var architectList = [Photo]()
     private var businessList = [Photo]()
-    override func loadView() {
-        view = topicView
+    
+    private lazy var scrollView = {
+        let scroll = UIScrollView()
+        scroll.showsVerticalScrollIndicator = false
+        return scroll
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(scrollView)
+        scrollView.addSubview(topicView)
+        configureLayout()
     }
-    
-    
+
+    private func configureLayout() {
+        scrollView.backgroundColor = .lightGray
+        topicView.backgroundColor = .red
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        topicView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.width.equalTo(scrollView.snp.width)
+            make.verticalEdges.equalTo(scrollView)
+        }
+        print("topicView height",topicView.frame.height)
+    }
     
     override func configureView() {
         navigationItem.title = "OUR TOPIC"
@@ -67,17 +90,14 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
         case topicView.goldenCollectionView:
             guard let cell = topicView.goldenCollectionView.dequeueReusableCell(withReuseIdentifier: GoldenCollectionViewCell.identifier, for: indexPath) as? GoldenCollectionViewCell else { return UICollectionViewCell() }
             cell.configureData(item: goldenList[indexPath.item])
-            cell.backgroundColor = .black
             return cell
         case topicView.architectCollectionView:
             guard let cell = topicView.architectCollectionView.dequeueReusableCell(withReuseIdentifier: ArchitectCollectionViewCell.identifier, for: indexPath) as? ArchitectCollectionViewCell else { return UICollectionViewCell() }
             cell.configureData(item: architectList[indexPath.item])
-            cell.backgroundColor = .black
             return cell
         default:
             guard let cell = topicView.businessCollectionView.dequeueReusableCell(withReuseIdentifier: BusinessCollectionViewCell.identifier, for: indexPath) as? BusinessCollectionViewCell else { return UICollectionViewCell() }
             cell.configureData(item: businessList[indexPath.item])
-            cell.backgroundColor = .black
             return cell
         }
     }

@@ -9,7 +9,6 @@ import UIKit
 
 class TopicView: BaseView {
     
-    
     let goldenLabel = {
         let label = UILabel()
         label.text = "골든 아워"
@@ -60,7 +59,7 @@ class TopicView: BaseView {
         goldenCollectionView.snp.makeConstraints { make in
             make.top.equalTo(goldenLabel.snp.bottom).offset(10)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
-            make.height.equalTo(100)
+            make.height.equalTo(300)
         }
         architectLabel.snp.makeConstraints { make in
             make.top.equalTo(goldenCollectionView.snp.bottom).offset(30)
@@ -69,7 +68,7 @@ class TopicView: BaseView {
         architectCollectionView.snp.makeConstraints { make in
             make.top.equalTo(architectLabel.snp.bottom).offset(10)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
-            make.height.equalTo(100)
+            make.height.equalTo(300)
         }
         businessLabel.snp.makeConstraints { make in
             make.top.equalTo(architectCollectionView.snp.bottom).offset(30)
@@ -78,7 +77,8 @@ class TopicView: BaseView {
         businessCollectionView.snp.makeConstraints { make in
             make.top.equalTo(businessLabel.snp.bottom).offset(10)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
-            make.height.equalTo(100)
+            make.bottom.equalTo(safeAreaLayoutGuide).offset(-30)
+            make.height.equalTo(300)
         }
     }
     override func configureView() {
