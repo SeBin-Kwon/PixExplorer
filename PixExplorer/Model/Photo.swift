@@ -16,6 +16,7 @@ struct PhotoList: Decodable {
 struct Photo: Decodable {
     let urls: PhotoUrls
     let created_at: String
+    let likes: Int
 }
 
 struct PhotoUrls: Decodable {

@@ -16,12 +16,13 @@ class SearchViewController: BaseViewController {
     private var isEnd = false
     private var searchText: String?
     private var previousSearchText: String?
-    
+    private var isLatest = false
     override func loadView() {
         view = searchView
     }
     
-    override func configureView() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         navigationItem.title = "SEARCH PHOTO"
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
@@ -29,12 +30,31 @@ class SearchViewController: BaseViewController {
         searchView.searchBar.delegate = self
         searchView.collectionView.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
         guard let searchText else { return }
-        callRequest(query: searchText, page: page)
+        callRequest(query: searchText, page: page, order: isLatest)
     }
     
-    func callRequest(query: String, page: Int) {
-        NetworkManager.shard.callRequest(query, page) { value in
+    override func viewDidLayoutSubviews() {
+        searchView.orderButton.layer.cornerRadius = searchView.orderButton.frame.height / 2
+    }
+    
+    override func configureView() {
+        searchView.orderButton.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func orderButtonTapped() {
+        print(#function)
+        guard let searchText else { return }
+        guard searchText.count != 0 else { return }
+        isLatest.toggle()
+        searchView.orderButton.setTitle(isLatest ? "최신순" : "관련순", for: .normal)
+        page = 1
+        callRequest(query: searchText, page: page, order: isLatest)
+    }
+    
+    func callRequest(query: String, page: Int, order: Bool) {
+        NetworkManager.shard.fetchPhotoSearchResults(query, page, order) { value in
             print(#function, "page:", page)
+            print("islatest",order)
             guard let value else { return }
             if page == 1 {
                 self.list = value.results
@@ -72,7 +92,7 @@ extension SearchViewController: UISearchBarDelegate {
         isEnd = false
         previousSearchText = searchText
         self.searchText = searchText
-        callRequest(query: searchText, page: page)
+        callRequest(query: searchText, page: page, order: isLatest)
     }
 }
 
@@ -87,7 +107,7 @@ extension SearchViewController: UICollectionViewDataSourcePrefetching {
             if !isEnd && list.count-2 == indexPath.item || list.count-3 == indexPath.item {
                 page += 1
                 guard let searchText else { return }
-                callRequest(query: searchText, page: page)
+                callRequest(query: searchText, page: page, order: isLatest)
             }
         }
         
