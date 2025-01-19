@@ -54,7 +54,7 @@ class SearchView: BaseView {
         }
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(orderButton.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.bottom.equalTo(safeAreaLayoutGuide)
         }
         resultLabel.snp.makeConstraints { make in
@@ -69,13 +69,12 @@ class SearchView: BaseView {
     private func configureCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         let itemSpacing: CGFloat = 5
-        let lineSpacing: CGFloat = 5
         let screenWidth = UIScreen.main.bounds.width
-        let width = (screenWidth-itemSpacing-40)/2
+        let width = (screenWidth-itemSpacing)/2
         print(width)
         layout.minimumInteritemSpacing = itemSpacing
-        layout.minimumLineSpacing = lineSpacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.minimumLineSpacing = itemSpacing
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.itemSize = CGSize(width: width, height: width+(width/3))
         layout.scrollDirection = .vertical
         return layout
