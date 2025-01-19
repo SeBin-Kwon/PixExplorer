@@ -45,7 +45,7 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
     func configureData(item: Photo) {
         guard let url = URL(string: item.urls.small) else { return }
         imageView.kf.setImage(with: url)
-        starLabel.text = String(item.likes)
+        starLabel.text = NumberFormattedManager.shared.formatNumber(item.likes)
     }
 }
 
