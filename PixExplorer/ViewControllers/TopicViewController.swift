@@ -86,12 +86,21 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
         case topicView.goldenCollectionView:
             vc.id = goldenList[indexPath.item].id
             vc.urlString = goldenList[indexPath.item].urls.small
+            vc.name = goldenList[indexPath.item].user.name
+            vc.profileUrl = goldenList[indexPath.item].user.profile_image.small
+            vc.createdDate = goldenList[indexPath.item].created_at
         case topicView.architectCollectionView:
             vc.id = architectList[indexPath.item].id
             vc.urlString = architectList[indexPath.item].urls.small
+            vc.name = architectList[indexPath.item].user.name
+            vc.profileUrl = architectList[indexPath.item].user.profile_image.small
+            vc.createdDate = architectList[indexPath.item].created_at
         default:
             vc.id = businessList[indexPath.item].id
             vc.urlString = businessList[indexPath.item].urls.small
+            vc.name = businessList[indexPath.item].user.name
+            vc.profileUrl = businessList[indexPath.item].user.profile_image.small
+            vc.createdDate = businessList[indexPath.item].created_at
         }
         
     }

@@ -10,6 +10,7 @@ import SnapKit
 
 class DetailView: BaseView {
     
+    let detailHeaderView = DetailHeaderView()
     let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -46,6 +47,7 @@ class DetailView: BaseView {
     }()
     
     override func configureHierarchy() {
+        addSubview(detailHeaderView)
         addSubview(imageView)
         addSubview(infoLabel)
         addSubview(downloadLabel)
@@ -54,8 +56,13 @@ class DetailView: BaseView {
         addSubview(viewDataLabel)
     }
     override func configureLayout() {
-        imageView.snp.makeConstraints { make in
+        detailHeaderView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(50)
+        }
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(detailHeaderView.snp.bottom)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(300)
         }

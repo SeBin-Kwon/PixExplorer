@@ -18,9 +18,19 @@ struct Photo: Decodable {
     let urls: PhotoUrls
     let created_at: String
     let likes: Int
+    let user: UserInfo
 }
 
 struct PhotoUrls: Decodable {
     let full: String
+    let small: String
+}
+
+struct UserInfo: Decodable {
+    let name: String
+    let profile_image: ProfileUrls
+}
+
+struct ProfileUrls: Decodable {
     let small: String
 }

@@ -127,6 +127,9 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         navigationController?.pushViewController(vc, animated: true)
         vc.id = list[indexPath.item].id
         vc.urlString = list[indexPath.item].urls.small
+        vc.name = list[indexPath.item].user.name
+        vc.profileUrl = list[indexPath.item].user.profile_image.small
+        vc.createdDate = list[indexPath.item].created_at
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
