@@ -14,8 +14,29 @@ class DetailViewController: BaseViewController {
     var photo: Photo?
     
     let detailView = DetailView()
-    override func loadView() {
-        view = detailView
+    let scrollView = UIScrollView()
+    
+//    override func loadView() {
+//        view = detailView
+//    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(scrollView)
+        scrollView.addSubview(detailView)
+        configureLayout()
+    }
+    
+    private func configureLayout() {
+        scrollView.backgroundColor = .gray
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+        detailView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.width.equalTo(scrollView.snp.width)
+            make.verticalEdges.equalTo(scrollView)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

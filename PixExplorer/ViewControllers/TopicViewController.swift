@@ -16,6 +16,8 @@ class TopicViewController: BaseViewController {
     private var architectList = [Photo]()
     private var businessList = [Photo]()
     
+//    private var topicList: [[Photo]] = [[], [], []]
+    
     private lazy var scrollView = {
         let scroll = UIScrollView()
         scroll.showsVerticalScrollIndicator = false
@@ -85,10 +87,13 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
         switch collectionView {
         case topicView.goldenCollectionView:
             vc.photo = goldenList[indexPath.item]
+            vc.detailView.photo = goldenList[indexPath.item]
         case topicView.architectCollectionView:
             vc.photo = architectList[indexPath.item]
+            vc.detailView.photo = architectList[indexPath.item]
         default:
             vc.photo = businessList[indexPath.item]
+            vc.detailView.photo = businessList[indexPath.item]
         }
         
     }

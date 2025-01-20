@@ -10,6 +10,8 @@ import SnapKit
 
 class DetailView: BaseView {
     
+    var photo: Photo?
+
     let detailHeaderView = DetailHeaderView()
     let imageView = {
         let image = UIImageView()
@@ -68,6 +70,16 @@ class DetailView: BaseView {
         addSubview(viewDataLabel)
         addSubview(downloadDataLabel)
     }
+    
+//    override func layoutSubviews() {
+//        guard let photo else { return }
+//        imageView.snp.makeConstraints { make in
+//            make.top.equalTo(detailHeaderView.snp.bottom)
+//            make.width.equalToSuperview()
+//            make.height.equalTo(snp.width).multipliedBy(photo.height/photo.width)
+//        }
+//    }
+    
     override func configureLayout() {
         detailHeaderView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
@@ -76,7 +88,7 @@ class DetailView: BaseView {
         }
         imageView.snp.makeConstraints { make in
             make.top.equalTo(detailHeaderView.snp.bottom)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.width.equalToSuperview()
             make.height.equalTo(300)
         }
         infoLabel.snp.makeConstraints { make in
