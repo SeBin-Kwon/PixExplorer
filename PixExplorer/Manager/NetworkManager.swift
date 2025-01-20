@@ -13,10 +13,13 @@ class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     private let header: HTTPHeaders = ["Authorization": APIKey.unsplash]
-    func fetchPhotoSearchResults(_ query: String, _ page: Int, _ order: Bool, _ completionHandler: @escaping (PhotoList?) -> Void) {
+    func fetchPhotoSearchResults(_ query: String, _ page: Int, _ order: Bool, _ color: String? = nil, _ completionHandler: @escaping (PhotoList?) -> Void) {
         var url = "https://api.unsplash.com/search/photos?query=\(query)&page=\(page)&per_page=20"
         if order {
             url += "&order_by=latest"
+        }
+        if let color {
+            url += "&color=\(color)"
         }
         AF.request(url, method: .get, headers: header)
             .validate(statusCode: 200..<500)

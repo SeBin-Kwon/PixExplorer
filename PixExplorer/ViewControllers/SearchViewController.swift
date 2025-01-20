@@ -38,6 +38,21 @@ class SearchViewController: BaseViewController {
     
     override func configureView() {
         searchView.orderButton.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
+        Color.allCases.forEach {
+            let btn = ColorButton(frame: .zero, color: $0)
+            btn.setTitle($0.title, for: .normal)
+            btn.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
+            searchView.colorButtonStackView.addArrangedSubview(btn)
+        }
+    }
+    
+    @objc func colorButtonTapped(_ sender: ColorButton) {
+        guard let searchText else { return }
+        guard searchText.count != 0 else { return }
+        print(#function)
+//        sender.isSelectedButton(sender.isSelected)
+        page = 1
+        callRequest(query: searchText, page: page, order: isLatest, color: sender.color.rawValue)
     }
     
     @objc func orderButtonTapped() {
@@ -50,10 +65,9 @@ class SearchViewController: BaseViewController {
         callRequest(query: searchText, page: page, order: isLatest)
     }
     
-    func callRequest(query: String, page: Int, order: Bool) {
-        NetworkManager.shared.fetchPhotoSearchResults(query, page, order) { value in
+    func callRequest(query: String, page: Int, order: Bool, color: String? = nil) {
+        NetworkManager.shared.fetchPhotoSearchResults(query, page, order, color) { value in
             print(#function, "page:", page)
-            print("islatest",order)
             guard let value else { return }
             if page == 1 {
                 self.list = value.results
@@ -138,3 +152,4 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return cell
     }
 }
+

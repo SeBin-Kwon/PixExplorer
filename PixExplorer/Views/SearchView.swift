@@ -39,12 +39,30 @@ class SearchView: BaseView {
         return btn
     }()
     
+    let colorButtonStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.distribution = .fillProportionally
+        stack.spacing = 10
+        return stack
+    }()
+    
+    let scrollView = {
+       let scroll = UIScrollView()
+        scroll.showsHorizontalScrollIndicator = false
+        scroll.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 110)
+        return scroll
+    }()
+    
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureCollectionViewLayout())
     
     override func configureHierarchy() {
         addSubview(searchBar)
         addSubview(collectionView)
         addSubview(resultLabel)
+        addSubview(scrollView)
+        scrollView.addSubview(colorButtonStackView)
         addSubview(orderButton)
     }
     override func configureLayout() {
@@ -60,8 +78,16 @@ class SearchView: BaseView {
         resultLabel.snp.makeConstraints { make in
             make.center.equalTo(safeAreaLayoutGuide)
         }
-        orderButton.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom).offset(10)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+        }
+        colorButtonStackView.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(scrollView)
+            make.height.equalTo(scrollView.snp.height)
+        }
+        orderButton.snp.makeConstraints { make in
+            make.centerY.equalTo(scrollView)
             make.trailing.equalTo(safeAreaInsets).offset(18)
         }
     }

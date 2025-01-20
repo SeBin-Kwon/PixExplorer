@@ -27,6 +27,11 @@ class ColorButton: UIButton {
         self.configuration = buttonConfig
     }
     
+//    func isSelectedButton(_ isSelected: Bool) {
+//        self.configuration?.baseForegroundColor = isSelected ? .white : . black
+//        self.configuration?.baseBackgroundColor = isSelected ? .systemBlue : .systemGray6
+//    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
