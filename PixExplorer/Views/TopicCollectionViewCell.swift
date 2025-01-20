@@ -1,5 +1,5 @@
 //
-//  ArchitectCollectionViewCell.swift
+//  GoldenCollectionViewCell.swift
 //  PixExplorer
 //
 //  Created by Sebin Kwon on 1/19/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ArchitectCollectionViewCell: BaseCollectionViewCell {
+class TopicCollectionViewCell: BaseCollectionViewCell {
     let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -17,6 +17,7 @@ class ArchitectCollectionViewCell: BaseCollectionViewCell {
         return image
     }()
     let starLabel = StarLabel()
+    
     override func configureHierarchy() {
         addSubview(imageView)
         addSubview(starLabel)

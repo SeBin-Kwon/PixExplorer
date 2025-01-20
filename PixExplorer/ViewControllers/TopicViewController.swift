@@ -16,7 +16,7 @@ class TopicViewController: BaseViewController {
     private var architectList = [Photo]()
     private var businessList = [Photo]()
     
-//    private var topicList: [[Photo]] = [[], [], []]
+    private var topicList: [[TopicType:[Photo]]] = [[:], [:], [:]]
     
     private lazy var scrollView = {
         let scroll = UIScrollView()
@@ -42,6 +42,12 @@ class TopicViewController: BaseViewController {
         }
     }
     
+    enum TopicType: String, CaseIterable {
+        case goldenHour = "golden-hour"
+        case architectureInterior = "architecture-interior"
+        case businessWork = "business-work"
+    }
+    
     override func configureView() {
         navigationItem.title = "OUR TOPIC"
 
@@ -52,9 +58,9 @@ class TopicViewController: BaseViewController {
         topicView.businessCollectionView.delegate = self
         topicView.businessCollectionView.dataSource = self
         
-        topicView.goldenCollectionView.register(GoldenCollectionViewCell.self, forCellWithReuseIdentifier: GoldenCollectionViewCell.identifier)
-        topicView.architectCollectionView.register(ArchitectCollectionViewCell.self, forCellWithReuseIdentifier: ArchitectCollectionViewCell.identifier)
-        topicView.businessCollectionView.register(BusinessCollectionViewCell.self, forCellWithReuseIdentifier: BusinessCollectionViewCell.identifier)
+        topicView.goldenCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.identifier)
+        topicView.architectCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.identifier)
+        topicView.businessCollectionView.register(TopicCollectionViewCell.self, forCellWithReuseIdentifier: TopicCollectionViewCell.identifier)
         callRequest()
     }
     
@@ -62,7 +68,7 @@ class TopicViewController: BaseViewController {
     private func callRequest() {
         print(#function)
         let keyword = ["golden-hour", "architecture-interior", "business-work"]
-        for i in 0..<keyword.count {
+        for i in 0..<TopicType.allCases.count {
             NetworkManager.shared.fetchPhotoTopicResults(keyword[i]) { value in
                 guard let value else { return }
                 switch i {
@@ -105,15 +111,15 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
         case topicView.goldenCollectionView:
-            guard let cell = topicView.goldenCollectionView.dequeueReusableCell(withReuseIdentifier: GoldenCollectionViewCell.identifier, for: indexPath) as? GoldenCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = topicView.goldenCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.identifier, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
             cell.configureData(item: goldenList[indexPath.item])
             return cell
         case topicView.architectCollectionView:
-            guard let cell = topicView.architectCollectionView.dequeueReusableCell(withReuseIdentifier: ArchitectCollectionViewCell.identifier, for: indexPath) as? ArchitectCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = topicView.architectCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.identifier, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
             cell.configureData(item: architectList[indexPath.item])
             return cell
         default:
-            guard let cell = topicView.businessCollectionView.dequeueReusableCell(withReuseIdentifier: BusinessCollectionViewCell.identifier, for: indexPath) as? BusinessCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = topicView.businessCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.identifier, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
             cell.configureData(item: businessList[indexPath.item])
             return cell
         }
