@@ -17,6 +17,7 @@ class TopicViewController: BaseViewController {
     private var businessList = [Photo]()
     
     private var topicList: [[TopicType:[Photo]]] = [[:], [:], [:]]
+    private var isEndRequest = false
     
     private lazy var scrollView = {
         let scroll = UIScrollView()
@@ -68,7 +69,9 @@ class TopicViewController: BaseViewController {
     private func callRequest() {
         print(#function)
         let keyword = ["golden-hour", "architecture-interior", "business-work"]
+        let group = DispatchGroup()
         for i in 0..<TopicType.allCases.count {
+            group.enter()
             NetworkManager.shared.fetchPhotoTopicResults(api: .topic(value: TopicRequest(topic: keyword[i], page: 1))) { value in
                 switch i {
                 case 0:
@@ -78,9 +81,18 @@ class TopicViewController: BaseViewController {
                 default:
                     self.businessList = value
                 }
+                group.leave()
             } failHandler: { error in
                 self.displayAlert(title: error.localizedDescription)
+                group.leave()
             }
+        }
+        group.notify(queue: .main) {
+            print(#function, "---END---")
+            self.isEndRequest = true
+            self.topicView.goldenCollectionView.reloadData()
+            self.topicView.architectCollectionView.reloadData()
+            self.topicView.businessCollectionView.reloadData()
         }
     }
 }
@@ -113,14 +125,17 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
         switch collectionView {
         case topicView.goldenCollectionView:
             guard let cell = topicView.goldenCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.identifier, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
+            guard isEndRequest else { return cell }
             cell.configureData(item: goldenList[indexPath.item])
             return cell
         case topicView.architectCollectionView:
             guard let cell = topicView.architectCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.identifier, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
+            guard isEndRequest else { return cell }
             cell.configureData(item: architectList[indexPath.item])
             return cell
         default:
             guard let cell = topicView.businessCollectionView.dequeueReusableCell(withReuseIdentifier: TopicCollectionViewCell.identifier, for: indexPath) as? TopicCollectionViewCell else { return UICollectionViewCell() }
+            guard isEndRequest else { return cell }
             cell.configureData(item: businessList[indexPath.item])
             return cell
         }

@@ -27,7 +27,7 @@ class TabBarController: UITabBarController {
         let fourthNav = UINavigationController(rootViewController: FourthViewController())
         fourthNav.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "heart"), selectedImage: UIImage(systemName: "heart"))
         
-        setViewControllers([firstNav, secondNav, thirdNav, fourthNav], animated: true)
+        setViewControllers([secondNav, firstNav, thirdNav, fourthNav], animated: true)
     }
     
 }
