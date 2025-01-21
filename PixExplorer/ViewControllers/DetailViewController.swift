@@ -28,7 +28,6 @@ class DetailViewController: BaseViewController {
     }
     
     private func configureLayout() {
-        scrollView.backgroundColor = .gray
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
