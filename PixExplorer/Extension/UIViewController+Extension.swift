@@ -11,4 +11,11 @@ extension UIViewController {
     static var identifier: String {
         String(describing: self)
     }
+    
+    func displayAlert(title: String, message: String? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "확인", style: .cancel)
+        alert.addAction(okButton)
+        present(alert, animated: true)
+    }
 }
