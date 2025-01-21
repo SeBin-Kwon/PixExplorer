@@ -22,6 +22,7 @@ class SearchViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(#function)
         navigationItem.title = "SEARCH PHOTO"
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
@@ -37,6 +38,7 @@ class SearchViewController: BaseViewController {
     }
     
     override func configureView() {
+        print(#function)
         searchView.orderButton.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
         Color.allCases.forEach {
             let btn = ColorButton(frame: .zero, color: $0)
@@ -44,15 +46,23 @@ class SearchViewController: BaseViewController {
             btn.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
             searchView.colorButtonStackView.addArrangedSubview(btn)
         }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapGestureTapped))
+        searchView.collectionView.addGestureRecognizer(tap)
+        searchView.collectionView.keyboardDismissMode = .onDrag
+    }
+    
+    @objc func tapGestureTapped() {
+        print(#function)
+        view.endEditing(true)
     }
     
     @objc func colorButtonTapped(_ sender: ColorButton) {
         guard let searchText else { return }
         guard searchText.count != 0 else { return }
         print(#function)
-//        sender.isSelectedButton(sender.isSelected)
         page = 1
         callRequest(query: searchText, page: page, order: isLatest, color: sender.color.rawValue)
+        view.endEditing(true)
     }
     
     @objc func orderButtonTapped() {
@@ -63,6 +73,7 @@ class SearchViewController: BaseViewController {
         searchView.orderButton.setTitle(isLatest ? "최신순" : "관련순", for: .normal)
         page = 1
         callRequest(query: searchText, page: page, order: isLatest)
+        view.endEditing(true)
     }
     
     func callRequest(query: String, page: Int, order: Bool, color: String? = nil) {
