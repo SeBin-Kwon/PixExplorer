@@ -54,7 +54,7 @@ class DetailViewController: BaseViewController {
     private func callRequest(_ id: String) {
         print(#function)
         guard let photo else { return }
-        NetworkManager.shared.fetchPhotoDetailResults(photo.id) { value in
+        NetworkManager.shared.fetchPhotoDetailResults(api: .detail(id: photo.id)) { value in
             guard let value else { return }
             self.detailView.downloadDataLabel.text = NumberFormattedManager.shared.formatNumber(value.downloads.total)
             self.detailView.viewDataLabel.text = NumberFormattedManager.shared.formatNumber(value.views.total)

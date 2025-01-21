@@ -69,7 +69,7 @@ class TopicViewController: BaseViewController {
         print(#function)
         let keyword = ["golden-hour", "architecture-interior", "business-work"]
         for i in 0..<TopicType.allCases.count {
-            NetworkManager.shared.fetchPhotoTopicResults(keyword[i]) { value in
+            NetworkManager.shared.fetchPhotoTopicResults(api: .topic(value: TopicRequest(topic: keyword[i], page: 1))) { value in
                 guard let value else { return }
                 switch i {
                 case 0:

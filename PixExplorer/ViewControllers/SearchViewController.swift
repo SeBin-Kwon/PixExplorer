@@ -66,15 +66,14 @@ class SearchViewController: BaseViewController {
     }
     
     func callRequest(query: String, page: Int, order: Bool, color: String? = nil) {
-        NetworkManager.shared.fetchPhotoSearchResults(query, page, order, color) { value in
+        NetworkManager.shared.fetchPhotoSearchResults(api: .search(value: SearchRequest(query: query, page: page, order: order, color: color))) { value in
             print(#function, "page:", page)
-            guard let value else { return }
             if page == 1 {
                 self.list = value.results
             } else {
                 self.list.append(contentsOf: value.results)
             }
-            if value.total == page {
+            if value.total_pages == page {
                 self.isEnd = true
             }
             if !self.list.isEmpty {
