@@ -46,8 +46,8 @@ class SearchViewController: BaseViewController {
             btn.addTarget(self, action: #selector(colorButtonTapped), for: .touchUpInside)
             searchView.colorButtonStackView.addArrangedSubview(btn)
         }
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapGestureTapped))
-        searchView.collectionView.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(tapGestureTapped))
+//        searchView.collectionView.addGestureRecognizer(tap)
         searchView.collectionView.keyboardDismissMode = .onDrag
     }
     
