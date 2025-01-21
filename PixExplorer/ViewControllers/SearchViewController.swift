@@ -88,6 +88,8 @@ class SearchViewController: BaseViewController {
             }
             print("전체 검색 수", value.total)
             print("총 페이지 수", value.total_pages)
+        } failHandler: { error in
+            self.displayAlert(title: error.localizedDescription)
         }
     }
 }

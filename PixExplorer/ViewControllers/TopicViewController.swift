@@ -70,7 +70,6 @@ class TopicViewController: BaseViewController {
         let keyword = ["golden-hour", "architecture-interior", "business-work"]
         for i in 0..<TopicType.allCases.count {
             NetworkManager.shared.fetchPhotoTopicResults(api: .topic(value: TopicRequest(topic: keyword[i], page: 1))) { value in
-                guard let value else { return }
                 switch i {
                 case 0:
                     self.goldenList = value
@@ -79,6 +78,8 @@ class TopicViewController: BaseViewController {
                 default:
                     self.businessList = value
                 }
+            } failHandler: { error in
+                self.displayAlert(title: error.localizedDescription)
             }
         }
     }
