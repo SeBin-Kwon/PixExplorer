@@ -13,6 +13,9 @@ class BaseViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         configureView()
         view.backgroundColor = .white
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        backBarButtonItem.tintColor = .black
+        navigationItem.backBarButtonItem = backBarButtonItem
     }
     
     func configureView() {

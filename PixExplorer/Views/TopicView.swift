@@ -39,7 +39,7 @@ final class TopicView: BaseView {
         
         collectionViewList[0].snp.makeConstraints { make in
             make.top.equalTo(labelList[0].snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(300)
         }
         labelList[1].snp.makeConstraints { make in
@@ -48,7 +48,7 @@ final class TopicView: BaseView {
         }
         collectionViewList[1].snp.makeConstraints { make in
             make.top.equalTo(labelList[1].snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(300)
         }
         labelList[2].snp.makeConstraints { make in
@@ -57,7 +57,7 @@ final class TopicView: BaseView {
         }
         collectionViewList[2].snp.makeConstraints { make in
             make.top.equalTo(labelList[2].snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.bottom.equalTo(safeAreaLayoutGuide).offset(-30)
             make.height.equalTo(300)
         }
@@ -74,7 +74,7 @@ final class TopicView: BaseView {
         let layout = UICollectionViewFlowLayout()
         let itemSpacing: CGFloat = 10
         layout.minimumInteritemSpacing = itemSpacing
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: itemSpacing, bottom: 0, right: itemSpacing)
         layout.itemSize = CGSize(width: 200, height: 300)
         layout.scrollDirection = .horizontal
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
