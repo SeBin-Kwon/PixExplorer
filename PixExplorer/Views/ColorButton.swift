@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ColorButton: UIButton {
+final class ColorButton: UIButton {
     let color: Color
     init(frame: CGRect, color: Color) {
         self.color = color

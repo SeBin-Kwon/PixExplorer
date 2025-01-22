@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailHeaderView: BaseView {
+final class DetailHeaderView: BaseView {
     let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill

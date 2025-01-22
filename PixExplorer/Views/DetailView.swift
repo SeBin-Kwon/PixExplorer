@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class DetailView: BaseView {
+final class DetailView: BaseView {
     
     var photo: Photo?
 
@@ -19,25 +19,25 @@ class DetailView: BaseView {
         image.clipsToBounds = true
         return image
     }()
-    let infoLabel = {
+    private let infoLabel = {
         let label = UILabel()
         label.text = "정보"
         label.font = .systemFont(ofSize: 17, weight: .bold)
         return label
     }()
-    let sizeLabel = {
+    private let sizeLabel = {
         let label = UILabel()
         label.text = "크기"
         label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
     }()
-    let downloadLabel = {
+    private let downloadLabel = {
         let label = UILabel()
         label.text = "다운로드"
         label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
     }()
-    let viewLabel = {
+    private let viewLabel = {
         let label = UILabel()
         label.text = "조회수"
         label.font = .systemFont(ofSize: 15, weight: .bold)

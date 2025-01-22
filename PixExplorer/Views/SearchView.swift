@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SearchView: BaseView {
+final class SearchView: BaseView {
     
     let searchBar = {
         let search = UISearchBar()
@@ -48,7 +48,7 @@ class SearchView: BaseView {
         return stack
     }()
     
-    let scrollView = {
+    private let scrollView = {
        let scroll = UIScrollView()
         scroll.showsHorizontalScrollIndicator = false
         scroll.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 110)

@@ -7,13 +7,13 @@
 
 import UIKit
 
-class TopicView: BaseView {
+final class TopicView: BaseView {
     
     var topicResultList = Array(Topic.allCases.shuffled()[0..<3])
-    lazy var labelList = [UILabel]()
+    private lazy var labelList = [UILabel]()
     lazy var collectionViewList = [UICollectionView]()
 
-    let imageView = {
+    private let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true

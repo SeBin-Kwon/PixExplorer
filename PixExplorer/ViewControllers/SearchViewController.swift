@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: BaseViewController {
+final class SearchViewController: BaseViewController {
     
     private let searchView = SearchView()
     private var list = [Photo]()
@@ -50,12 +50,12 @@ class SearchViewController: BaseViewController {
 //        searchView.searchBar.becomeFirstResponder()
     }
     
-    @objc func tapGestureTapped() {
+    @objc private func tapGestureTapped() {
         print(#function)
         view.endEditing(true)
     }
     
-    @objc func colorButtonTapped(_ sender: ColorButton) {
+    @objc private func colorButtonTapped(_ sender: ColorButton) {
         guard let searchText else { return }
         guard searchText.count != 0 else { return }
         print(#function)
@@ -64,7 +64,7 @@ class SearchViewController: BaseViewController {
         view.endEditing(true)
     }
     
-    @objc func orderButtonTapped() {
+    @objc private func orderButtonTapped() {
         print(#function)
         guard let searchText else { return }
         guard searchText.count != 0 else { return }
@@ -75,7 +75,7 @@ class SearchViewController: BaseViewController {
         view.endEditing(true)
     }
     
-    func callRequest(query: String, page: Int, order: Bool, color: String? = nil) {
+    private func callRequest(query: String, page: Int, order: Bool, color: String? = nil) {
         NetworkManager.shared.fetchPhotoResults(api: .search(value: SearchRequest(query: query, page: page, order: order, color: color)), type: PhotoList.self) { value in
             print(#function, "page:", page)
             if page == 1 {

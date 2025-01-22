@@ -7,14 +7,14 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabBarController()
         tabBar.tintColor = .black
     }
     
-    func configureTabBarController() {
+    private func configureTabBarController() {
         let firstNav = UINavigationController(rootViewController: SearchViewController())
         firstNav.tabBarItem = UITabBarItem(title: nil, image: UIImage(systemName: "magnifyingglass"), selectedImage: UIImage(systemName: "magnifyingglass"))
         

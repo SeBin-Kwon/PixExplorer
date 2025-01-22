@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class StarLabel: BaseView {
+final class StarLabel: BaseView {
     
-    let backgroundView = {
+    private let backgroundView = {
         let bg = UIView()
         bg.backgroundColor = .darkGray
         bg.clipsToBounds = true
@@ -29,7 +29,7 @@ class StarLabel: BaseView {
         return label
     }()
     
-    let starImage = {
+    private let starImage = {
         let image = UIImageView()
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 8)
         image.image = UIImage(systemName: "star.fill", withConfiguration: imageConfig)

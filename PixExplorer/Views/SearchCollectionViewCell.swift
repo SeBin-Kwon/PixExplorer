@@ -9,9 +9,9 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class SearchCollectionViewCell: BaseCollectionViewCell {
+final class SearchCollectionViewCell: BaseCollectionViewCell {
     
-    let imageView = {
+    private let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.backgroundColor = .systemGray6
@@ -19,7 +19,7 @@ class SearchCollectionViewCell: BaseCollectionViewCell {
         return image
     }()
     
-    let starLabel = StarLabel()
+    private let starLabel = StarLabel()
     
     override func configureHierarchy() {
         addSubview(imageView)

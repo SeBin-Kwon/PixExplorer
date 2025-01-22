@@ -7,8 +7,8 @@
 
 import UIKit
 
-class TopicCollectionViewCell: BaseCollectionViewCell {
-    let imageView = {
+final class TopicCollectionViewCell: BaseCollectionViewCell {
+    private let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 20
@@ -16,7 +16,7 @@ class TopicCollectionViewCell: BaseCollectionViewCell {
         image.backgroundColor = .systemGray6
         return image
     }()
-    let starLabel = StarLabel()
+    private let starLabel = StarLabel()
     
     override func configureHierarchy() {
         addSubview(imageView)

@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class TopicViewController: BaseViewController {
+final class TopicViewController: BaseViewController {
     
     private let topicView = TopicView()
     private var topicDict = [Topic:[Photo]]()

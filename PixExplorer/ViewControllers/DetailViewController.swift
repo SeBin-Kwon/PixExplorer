@@ -9,16 +9,12 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class DetailViewController: BaseViewController {
+final class DetailViewController: BaseViewController {
     
     var photo: Photo?
     
     let detailView = DetailView()
-    let scrollView = UIScrollView()
-    
-//    override func loadView() {
-//        view = detailView
-//    }
+    private let scrollView = UIScrollView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
