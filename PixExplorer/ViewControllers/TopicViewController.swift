@@ -22,6 +22,7 @@ class TopicViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(#function, self)
         view.addSubview(scrollView)
         scrollView.addSubview(topicView)
         configureLayout()
@@ -39,6 +40,7 @@ class TopicViewController: BaseViewController {
     }
     
     override func configureView() {
+        print(#function, self)
         navigationItem.title = "OUR TOPIC"
         topicView.collectionViewList.enumerated().forEach {
             $1.delegate = self
@@ -55,7 +57,7 @@ class TopicViewController: BaseViewController {
         let group = DispatchGroup()
         for element in list {
             group.enter()
-            NetworkManager.shared.fetchPhotoTopicResults(api: .topic(value: TopicRequest(topic: element.rawValue, page: 1))) { value in
+            NetworkManager.shared.fetchPhotoResults(api: .topic(value: TopicRequest(topic: element.rawValue, page: 1)), type: [Photo].self) { value in
                 self.topicDict[element] = value
                 group.leave()
             } failHandler: { error in

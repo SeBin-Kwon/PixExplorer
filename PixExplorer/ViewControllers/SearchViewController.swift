@@ -22,7 +22,6 @@ class SearchViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(#function)
         navigationItem.title = "SEARCH PHOTO"
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
@@ -38,7 +37,6 @@ class SearchViewController: BaseViewController {
     }
     
     override func configureView() {
-        print(#function)
         searchView.orderButton.addTarget(self, action: #selector(orderButtonTapped), for: .touchUpInside)
         Color.allCases.forEach {
             let btn = ColorButton(frame: .zero, color: $0)
@@ -47,8 +45,9 @@ class SearchViewController: BaseViewController {
             searchView.colorButtonStackView.addArrangedSubview(btn)
         }
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(tapGestureTapped))
-//        searchView.collectionView.addGestureRecognizer(tap)
+//        searchView.addGestureRecognizer(tap)
         searchView.collectionView.keyboardDismissMode = .onDrag
+//        searchView.searchBar.becomeFirstResponder()
     }
     
     @objc func tapGestureTapped() {
@@ -77,7 +76,7 @@ class SearchViewController: BaseViewController {
     }
     
     func callRequest(query: String, page: Int, order: Bool, color: String? = nil) {
-        NetworkManager.shared.fetchPhotoSearchResults(api: .search(value: SearchRequest(query: query, page: page, order: order, color: color))) { value in
+        NetworkManager.shared.fetchPhotoResults(api: .search(value: SearchRequest(query: query, page: page, order: order, color: color)), type: PhotoList.self) { value in
             print(#function, "page:", page)
             if page == 1 {
                 self.list = value.results
@@ -146,6 +145,8 @@ extension SearchViewController: UICollectionViewDataSourcePrefetching {
 
 // MARK: UICollectionViewDelegate, DataSource
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(#function)
