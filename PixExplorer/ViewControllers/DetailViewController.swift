@@ -52,8 +52,8 @@ final class DetailViewController: BaseViewController {
         NetworkManager.shared.fetchPhotoResults(api: .detail(id: photo.id), type: PhotoDetail.self) { value in
             self.detailView.downloadDataLabel.text = NumberFormattedManager.shared.formatNumber(value.downloads.total)
             self.detailView.viewDataLabel.text = NumberFormattedManager.shared.formatNumber(value.views.total)
-        } failHandler: { error in
-            self.displayAlert(title: error.localizedDescription)
+        } failHandler: { code, error in
+            self.displayAlert(title: "\(String(code)): \(error.rawValue)", message: error.reason)
         }
     }
     

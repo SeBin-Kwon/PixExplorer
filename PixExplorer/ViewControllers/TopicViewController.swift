@@ -60,8 +60,8 @@ final class TopicViewController: BaseViewController {
             NetworkManager.shared.fetchPhotoResults(api: .topic(value: TopicRequest(topic: element.rawValue, page: 1)), type: [Photo].self) { value in
                 self.topicDict[element] = value
                 group.leave()
-            } failHandler: { error in
-                self.displayAlert(title: error.localizedDescription)
+            } failHandler: { code, error in
+                self.displayAlert(title: "\(String(code)): \(error.rawValue)", message: error.reason)
                 group.leave()
             }
         }
