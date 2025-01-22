@@ -72,15 +72,17 @@ final class DetailView: BaseView {
         addSubview(downloadDataLabel)
     }
     
-    override func layoutSubviews() {
+    override func updateConstraints() {
+        print(#function)
         guard let photo else { return }
         imageView.snp.makeConstraints { make in
             make.top.equalTo(detailHeaderView.snp.bottom)
             make.width.equalToSuperview()
             make.height.equalTo(snp.width).multipliedBy(CGFloat(photo.height)/CGFloat(photo.width))
         }
+        super.updateConstraints()
     }
-    
+        
     override func configureLayout() {
 
         detailHeaderView.snp.makeConstraints { make in
