@@ -59,6 +59,7 @@ final class DetailView: BaseView {
         return label
     }()
     
+    
     override func configureHierarchy() {
         addSubview(detailHeaderView)
         addSubview(imageView)
@@ -71,26 +72,23 @@ final class DetailView: BaseView {
         addSubview(downloadDataLabel)
     }
     
-//    override func layoutSubviews() {
-//        guard let photo else { return }
-//        imageView.snp.makeConstraints { make in
-//            make.top.equalTo(detailHeaderView.snp.bottom)
-//            make.width.equalToSuperview()
-//            make.height.equalTo(snp.width).multipliedBy(photo.height/photo.width)
-//        }
-//    }
+    override func layoutSubviews() {
+        guard let photo else { return }
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(detailHeaderView.snp.bottom)
+            make.width.equalToSuperview()
+            make.height.equalTo(snp.width).multipliedBy(CGFloat(photo.height)/CGFloat(photo.width))
+        }
+    }
     
     override func configureLayout() {
+
         detailHeaderView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(50)
         }
-        imageView.snp.makeConstraints { make in
-            make.top.equalTo(detailHeaderView.snp.bottom)
-            make.width.equalToSuperview()
-            make.height.equalTo(300)
-        }
+
         infoLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(10)
             make.leading.equalTo(safeAreaLayoutGuide).offset(10)
@@ -118,6 +116,7 @@ final class DetailView: BaseView {
         downloadDataLabel.snp.makeConstraints { make in
             make.top.equalTo(viewDataLabel.snp.bottom).offset(10)
             make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(50)
         }
     }
 }

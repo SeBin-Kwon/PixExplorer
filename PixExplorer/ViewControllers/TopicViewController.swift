@@ -82,7 +82,6 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
         navigationController?.pushViewController(vc, animated: true)
         guard let photoList = topicDict[topicView.topicResultList[collectionView.tag]] else { return }
         vc.photo = photoList[indexPath.item]
-        vc.detailView.photo = photoList[indexPath.item]
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

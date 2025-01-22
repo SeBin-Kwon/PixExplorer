@@ -36,6 +36,7 @@ final class DetailViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         guard let photo else { return }
+        detailView.photo = photo
         callRequest(photo.id)
         guard let url = URL(string: photo.urls.small) else { return }
         detailView.imageView.kf.setImage(with: url)

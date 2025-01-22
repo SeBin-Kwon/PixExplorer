@@ -154,7 +154,6 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let vc = DetailViewController()
         navigationController?.pushViewController(vc, animated: true)
         vc.photo = list[indexPath.item]
-        vc.detailView.photo = list[indexPath.item]
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
