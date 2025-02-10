@@ -23,30 +23,27 @@ class NetworkManager {
                     completionHandler(value)
                 case .failure(let error):
                     guard let code = error.responseCode else { return }
-                    switch code {
-                    case 400:
-                        failHandler(code, ErrorType.badRequest)
-                    case 401:
-                        failHandler(code, ErrorType.unauthorized)
-                    case 403:
-                        failHandler(code, ErrorType.forbidden)
-                    case 404:
-                        failHandler(code, ErrorType.notFound)
-                    case 500, 503:
-                        failHandler(code, ErrorType.server)
-                    default:
-                        failHandler(code, ErrorType.server)
-                    }
+                    failHandler(code, ErrorType(rawValue: code) ?? ErrorType.server)
                 }
             }
     }
  
-    enum ErrorType: String {
-        case badRequest = "잘못된 요청"
-        case unauthorized = "승인되지 않음"
-        case forbidden = "금지됨"
-        case notFound = "찾을 수 없음"
-        case server = "서버 오류"
+    enum ErrorType: Int {
+        case badRequest = 400
+        case unauthorized = 401
+        case forbidden = 403
+        case notFound = 404
+        case server = 500
+        
+        var title: String {
+            switch self {
+            case .badRequest: return "잘못된 요청"
+            case .unauthorized: return "승인되지 않음"
+            case .forbidden: return "금지됨"
+            case .notFound: return "찾을 수 없음"
+            case .server: return "서버 오류"
+            }
+        }
         
         var reason: String {
             switch self {

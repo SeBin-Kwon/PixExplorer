@@ -99,7 +99,7 @@ final class SearchViewController: BaseViewController {
             print("전체 검색 수", value.total)
             print("총 페이지 수", value.total_pages)
         } failHandler: { code, error in
-            self.displayAlert(title: "\(String(code)): \(error.rawValue)", message: error.reason)
+            self.displayAlert(title: "\(String(code)): \(error.title)", message: error.reason)
             
         }
     }

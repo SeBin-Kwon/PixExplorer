@@ -79,7 +79,7 @@ final class TopicViewController: BaseViewController {
                 self.topicDict[element] = value
                 group.leave()
             } failHandler: { code, error in
-                self.displayAlert(title: "\(String(code)): \(error.rawValue)", message: error.reason)
+                self.displayAlert(title: "\(String(code)): \(error.title)", message: error.reason)
                 group.leave()
             }
         }
