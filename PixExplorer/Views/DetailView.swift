@@ -11,8 +11,11 @@ import SnapKit
 final class DetailView: BaseView {
     
     var photo: Photo?
-
     let detailHeaderView = DetailHeaderView()
+    
+    private let scrollView = UIScrollView()
+    
+    let uiView = UIView()
     let imageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -61,15 +64,11 @@ final class DetailView: BaseView {
     
     
     override func configureHierarchy() {
-        addSubview(detailHeaderView)
-        addSubview(imageView)
-        addSubview(infoLabel)
-        addSubview(sizeLabel)
-        addSubview(viewLabel)
-        addSubview(downloadLabel)
-        addSubview(sizeDataLabel)
-        addSubview(viewDataLabel)
-        addSubview(downloadDataLabel)
+        addSubview(scrollView)
+        scrollView.addSubview(uiView)
+        [detailHeaderView, imageView, infoLabel, sizeLabel, viewLabel, downloadLabel, sizeDataLabel, viewDataLabel, downloadDataLabel].forEach {
+            uiView.addSubview($0)
+        }
     }
     
     override func updateConstraints() {
@@ -77,23 +76,33 @@ final class DetailView: BaseView {
         guard let photo else { return }
         imageView.snp.makeConstraints { make in
             make.top.equalTo(detailHeaderView.snp.bottom)
-            make.width.equalToSuperview()
+            make.width.equalTo(uiView)
             make.height.equalTo(snp.width).multipliedBy(CGFloat(photo.height)/CGFloat(photo.width))
         }
         super.updateConstraints()
     }
         
     override func configureLayout() {
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        
+        uiView.snp.makeConstraints { make in
+            make.edges.equalTo(scrollView)
+            make.width.equalTo(scrollView.snp.width)
+            make.verticalEdges.equalTo(scrollView)
+        }
 
         detailHeaderView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(uiView)
+            make.horizontalEdges.equalTo(uiView)
             make.height.equalTo(50)
         }
 
         infoLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(10)
-            make.leading.equalTo(safeAreaLayoutGuide).offset(10)
+            make.leading.equalTo(uiView).offset(10)
         }
         sizeLabel.snp.makeConstraints { make in
             make.centerY.equalTo(infoLabel)
@@ -109,16 +118,16 @@ final class DetailView: BaseView {
         }
         sizeDataLabel.snp.makeConstraints { make in
             make.centerY.equalTo(infoLabel)
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
+            make.trailing.equalTo(uiView).inset(10)
         }
         viewDataLabel.snp.makeConstraints { make in
             make.top.equalTo(sizeDataLabel.snp.bottom).offset(10)
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
+            make.trailing.equalTo(uiView).inset(10)
         }
         downloadDataLabel.snp.makeConstraints { make in
             make.top.equalTo(viewDataLabel.snp.bottom).offset(10)
-            make.trailing.equalTo(safeAreaLayoutGuide).inset(10)
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(50)
+            make.trailing.equalTo(uiView).inset(10)
+            make.bottom.equalTo(uiView).inset(50)
         }
     }
 }

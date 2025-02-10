@@ -11,54 +11,48 @@ import Kingfisher
 
 final class DetailViewController: BaseViewController {
     
-    var photo: Photo?
-    
     let detailView = DetailView()
-    private let scrollView = UIScrollView()
+    let viewModel = DetailViewModel()
+    
+    override func loadView() {
+        view = detailView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(scrollView)
-        scrollView.addSubview(detailView)
-        configureLayout()
+        bindData()
     }
     
-    private func configureLayout() {
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+    private func bindData() {
+        viewModel.output.photo.lazyBind { [weak self] photo in
+            print("output photo lazybind")
+            self?.detailView.photo = photo
         }
-        detailView.snp.makeConstraints { make in
-            make.edges.equalTo(scrollView)
-            make.width.equalTo(scrollView.snp.width)
-            make.verticalEdges.equalTo(scrollView)
+        viewModel.output.profileName.lazyBind { [weak self] text in
+            self?.detailView.detailHeaderView.nameLabel.text = text
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        guard let photo else { return }
-        detailView.photo = photo
-        callRequest(photo.id)
-        guard let url = URL(string: photo.urls.small) else { return }
-        detailView.imageView.kf.setImage(with: url)
-        detailView.detailHeaderView.nameLabel.text = photo.user.name
-        detailView.detailHeaderView.dateLabel.text = DateFormattedManager.shared.dateFormetted(photo.created_at)
-        guard let url = URL(string: photo.user.profile_image.small) else { return }
-        detailView.detailHeaderView.imageView.kf.setImage(with: url)
-        detailView.sizeDataLabel.text = "\(photo.width) x \(photo.height)"
-    }
-    
-    private func callRequest(_ id: String) {
-        print(#function)
-        guard let photo else { return }
-        NetworkManager.shared.fetchPhotoResults(api: .detail(id: photo.id), type: PhotoDetail.self) { value in
-            self.detailView.downloadDataLabel.text = NumberFormattedManager.shared.formatNumber(value.downloads.total)
-            self.detailView.viewDataLabel.text = NumberFormattedManager.shared.formatNumber(value.views.total)
-        } failHandler: { code, error in
-            self.displayAlert(title: "\(String(code)): \(error.rawValue)", message: error.reason)
+        viewModel.output.profileURL.lazyBind { [weak self] url in
+            self?.detailView.detailHeaderView.imageView.kf.setImage(with: url)
         }
+        viewModel.output.photoDate.lazyBind { [weak self] text in
+            self?.detailView.detailHeaderView.dateLabel.text = text
+        }
+        viewModel.output.photoURL.lazyBind { [weak self] url in
+            self?.detailView.imageView.kf.setImage(with: url)
+        }
+        viewModel.output.photoSize.lazyBind { [weak self] text in
+            self?.detailView.sizeDataLabel.text = text
+        }
+        viewModel.output.photoDownloads.lazyBind { [weak self] text in
+            self?.detailView.downloadDataLabel.text = text
+        }
+        viewModel.output.photoViews.lazyBind { [weak self] text in
+            self?.detailView.viewDataLabel.text = text
+        }   
     }
     
     override func configureView() {
         navigationItem.largeTitleDisplayMode = .never
     }
+    
 }
