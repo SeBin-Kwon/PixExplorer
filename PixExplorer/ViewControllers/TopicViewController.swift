@@ -13,6 +13,7 @@ final class TopicViewController: BaseViewController {
     
     private let topicView = TopicView()
     private var topicDict = [Topic:[Photo]]()
+    private let refreshControl = UIRefreshControl()
     
     private lazy var scrollView = {
         let scroll = UIScrollView()
@@ -26,6 +27,23 @@ final class TopicViewController: BaseViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(topicView)
         configureLayout()
+//        initRefresh()
+    }
+    
+    func initRefresh() {
+        print(#function)
+        refreshControl.backgroundColor = .yellow
+        refreshControl.tintColor = .purple
+        refreshControl.attributedTitle = NSAttributedString(string: "당겨서 새로고침")
+        refreshControl.addTarget(self, action: #selector(refreshCollectionView(refresh:)), for: .valueChanged)
+        scrollView.refreshControl = refreshControl
+    }
+    
+    @objc func refreshCollectionView(refresh: UIRefreshControl) {
+        print("새로고침 시작")
+//        topicView.topicResultList = Array(Topic.allCases.shuffled()[0..<3])
+//        callRequest(topicView.topicResultList)
+        refresh.endRefreshing()
     }
     
     private func configureLayout() {
@@ -81,7 +99,7 @@ extension TopicViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let vc = DetailViewController()
         navigationController?.pushViewController(vc, animated: true)
         guard let photoList = topicDict[topicView.topicResultList[collectionView.tag]] else { return }
-        vc.photo = photoList[indexPath.item]
+        vc.viewModel.input.photo.value = photoList[indexPath.item]
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

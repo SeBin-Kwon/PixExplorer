@@ -10,9 +10,8 @@ import SnapKit
 
 final class DetailView: BaseView {
     
-    var photo: Photo?
+    var photoSize = (0, 0)
     let detailHeaderView = DetailHeaderView()
-    
     private let scrollView = UIScrollView()
     
     let uiView = UIView()
@@ -73,17 +72,15 @@ final class DetailView: BaseView {
     
     override func updateConstraints() {
         print(#function)
-        guard let photo else { return }
         imageView.snp.makeConstraints { make in
             make.top.equalTo(detailHeaderView.snp.bottom)
             make.width.equalTo(uiView)
-            make.height.equalTo(snp.width).multipliedBy(CGFloat(photo.height)/CGFloat(photo.width))
+            make.height.equalTo(snp.width).multipliedBy(CGFloat(photoSize.1)/CGFloat(photoSize.0))
         }
         super.updateConstraints()
     }
         
     override func configureLayout() {
-        
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }

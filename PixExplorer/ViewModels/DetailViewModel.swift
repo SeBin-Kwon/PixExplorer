@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DetailViewModel: BaseViewModel {
+final class DetailViewModel: BaseViewModel {
     
     private(set) var input: Input
     private(set) var output: Output
@@ -22,7 +22,7 @@ class DetailViewModel: BaseViewModel {
         var profileName: Observable<String?> = Observable(nil)
         var photoDate: Observable<String?> = Observable(nil)
         var photoURL: Observable<URL?> = Observable(nil)
-        var photoSize: Observable<String?> = Observable(nil)
+        var photoSize = Observable((0, 0))
         var photoDownloads: Observable<String?> = Observable(nil)
         var photoViews: Observable<String?> = Observable(nil)
         
@@ -43,7 +43,7 @@ class DetailViewModel: BaseViewModel {
             self?.output.profileName.value = value.user.name
             self?.output.photoDate.value = DateFormattedManager.shared.dateFormetted(value.created_at)
             self?.output.photoURL.value = URL(string: value.urls.small)
-            self?.output.photoSize.value = "\(value.width) x \(value.height)"
+            self?.output.photoSize.value = (value.width, value.height)
             self?.callRequest(value.id)
         }
     }

@@ -24,10 +24,6 @@ final class DetailViewController: BaseViewController {
     }
     
     private func bindData() {
-        viewModel.output.photo.lazyBind { [weak self] photo in
-            print("output photo lazybind")
-            self?.detailView.photo = photo
-        }
         viewModel.output.profileName.lazyBind { [weak self] text in
             self?.detailView.detailHeaderView.nameLabel.text = text
         }
@@ -40,15 +36,16 @@ final class DetailViewController: BaseViewController {
         viewModel.output.photoURL.lazyBind { [weak self] url in
             self?.detailView.imageView.kf.setImage(with: url)
         }
-        viewModel.output.photoSize.lazyBind { [weak self] text in
-            self?.detailView.sizeDataLabel.text = text
+        viewModel.output.photoSize.lazyBind { [weak self] size in
+            self?.detailView.photoSize = size
+            self?.detailView.sizeDataLabel.text = "\(size.0) x \(size.1)"
         }
         viewModel.output.photoDownloads.lazyBind { [weak self] text in
             self?.detailView.downloadDataLabel.text = text
         }
         viewModel.output.photoViews.lazyBind { [weak self] text in
             self?.detailView.viewDataLabel.text = text
-        }   
+        }
     }
     
     override func configureView() {
